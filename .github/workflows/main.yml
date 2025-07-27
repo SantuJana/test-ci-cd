@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
-          rsync -avz --delete -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" ./build/ $EC2_USER@$EC2_HOST:$DEPLOY_PATH
+          rsync -avz --delete -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" ./dist/ $EC2_USER@$EC2_HOST:$DEPLOY_PATH
           rm private_key.pem
 
       # Step 6: Restart Nginx on EC2
