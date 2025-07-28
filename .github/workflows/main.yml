@@ -40,8 +40,9 @@ jobs:
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
-          rsync -avz --delete --chown=${{ secrets.EC2_USER }}:www-data --chmod=Dg=rwx,Fg=rw --exclude='.git/' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./dist/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ env.DEPLOY_PATH }}
+          rsync -avz --delete -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" ./dist/ $EC2_USER@$EC2_HOST:$DEPLOY_PATH
           rm private_key.pem
+the problem here that rsync getting failed for permission error
 
       # Step 6: Restart Nginx on EC2
       # - name: Restart Nginx
